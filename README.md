@@ -1,38 +1,32 @@
-Самодельное решение для быстрого создания скриншотов под gnome-shell c Wayland.
+Dead simple screenshot maker, that compatible with Wayland and X Window.
 
-## Суть проблемы
+# Rationale
 
-Shutter и ScreenCloud не работают с Wayland, из-за ограничений безопасности и сырости самого Wayland. По факту есть лишь один способ сделать скриншот - это утилиа `gnome-screenshot`
+Shutter and ScreenCloud not work with Wayland because of security limitations of new architecture. The only app that works is `gnome-screenshot` utility.
 
-Можно ожидать что Shutter будет, в конечном счете, доработан. Но им сложно пользоваться. Типовые операции требуют большого кол-ва телодвижений. В сравнении с интерфейсов ScreenCloud он очень тормозной
+Eventually Wayland will provide some API for taking screenshots. Currently simple workaround can be used.
 
-Множество консольных утилит не функционируют с Wayland. Примеры:
+# Features
 
-- xset
-- утилиты для снятия скриншотов
-- утилиты и расширения для аннотации рабочего стола
+- Upload screenshot files to Dropbox
+- Short link via URL shortener
+- URL is copied to clipboard
 
-## Чего хочется
+# How to setup
 
-- Максимально быстрого интерфейса для создания скриншотов. Как в ScreenCloud - один хоткей плюс несколько кликов мышью
-- Автоматической выгрузки в Dropbox
-- Автоматического создания коротких ссылок на картинки - url shortener
-- Автоматического копирования в буфер обмена
+```bash
+apt install httpie
+apt install jq
+```
 
-## Cвой велосипед на Bash/Python
+Create `~/.screenshotsrc` file and define API key for Google URL Shortener in variable `GOO_GL_API_KEY`.
 
-- рисовать стрелки и текст поверх страницы в браузере или поверх всех окон в desktop
-- заимствовать код для работы с Dropbox и clipboard
-  вызов команд для получения ссылки на файл - https://gist.github.com/Tomin1/fc772002b9eea66f6ae4
-  собрать свой скриншотер на утилитах Linux - https://habrahabr.ru/post/132064/
-- прикрутить простейшие элементы графического интерфейса: dmenu чтобы показывать меню, zenity чтобы задавать вопросы пользователю и xclip чтобы копировать ссылку в буфер обмена
+Optionally, extra variables can override default settings for `SCREENSHOTS_FOLDER`, `SCREENSHOT_FILENAME`.
 
-## Альтернативные варианты решения проблемы
+Run script to make screenshot:
 
-**Для рисования стрелок использовать легковесный графический редактор**
+```bash
+screenshot.sh
+```
 
-Перепробовал с десяток редакторов. Либо не заводятся под последней Ubuntu c Wayland, либо громоздки и требуют большого
-
-**Подобрать инструмент для screen annotation**
-
-Pylote - не завелся на Wayland, Compiz и его extensions не работают c gnome-shell, ardesia устарела и не разрабатывается с 2012 года.
+It is recommended to add hotkey for this script. E.g. Win+PrtSсr
